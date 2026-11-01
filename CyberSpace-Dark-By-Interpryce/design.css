@@ -1,794 +1,1278 @@
 /**********************************************************
-|  Name: CyberSpace Dark
-|  Author: InterPryce Technology (https://interpryce.com)
-|  Version: 1.5.0
-|  Updated: 05/28/2024
-|  License: GNU - GPLv3
+|  Name: CyberSpace Dark — CyberPanel 3.x Port
+|  Original Author: InterPryce Technology
+|  Original Version: 1.5.0 / 05-28-2024
 |
-|  Tested on CyberPanel v2.3 - Build 5
+|  CyberPanel 3.x compatibility port
+|  Targets current Evergreen UI:
+|    #header
+|    #sidebar
+|    #main-content
 |
 ***********************************************************/
 
-/*------------------------------------------------------------------------------
-| Color Variables */
+/* ==========================================================
+   ORIGINAL CYBERSPACE PALETTE
+   ========================================================== */
 
-:root {
+html.cp-evergreen:root[data-color-scheme],
+html.cp-evergreen[data-theme="dark"] {
     --color-white: #ffffff;
     --color-white-85: #ffffffd9;
     --color-white-50: #ffffff80;
     --color-white-20: #ffffff33;
+
     --color-black: #000000;
     --color-black-90: #000000e6;
     --color-black-55: #0000008c;
     --color-black-40: #00000066;
     --color-black-25: #00000040;
+
     --color-primary: #00a1a9;
     --color-secondary: #059b82;
+
     --color-blue: #1aabe1;
     --color-blue-2: #00a0c5;
     --color-blue-3: #3da6ff;
     --color-blue-dark: #031521;
+
     --color-bg-blue: #002a43de;
     --color-bg-blue-35: #1d49a759;
+
     --color-red: #f02769;
     --color-red-2: #910000ba;
+
     --color-grey: #484848;
     --color-grey-2: #838383;
+
     --color-green: #1ed760;
     --color-green-2: #004b1a;
+
     --color-border: #89baed36;
     --color-border-2: #90e1ff33;
+
+
+    /* ------------------------------------------------------
+       CyberPanel 3.x native tokens
+       ------------------------------------------------------ */
+
+    --cp-cream: #031521;
+    --cp-ink: #ffffff;
+    --cp-mint: #002a43;
+
+    --cp-action: #00a1a9;
+    --cp-action-hover: #059b82;
+    --cp-action-text: #ffffff;
+
+    --cp-surface: #081b28;
+    --cp-selection: #1d49a759;
+    --cp-selection-text: #ffffff;
+
+    --cp-border-strong: #90e1ff33;
+
+    --cp-shadow:
+        0 2px 8px rgb(0 0 0 / 32%);
+
+    --cp-shadow-popover:
+        0 18px 48px rgb(0 0 0 / 65%);
+
+
+    /* Main surfaces */
+
+    --bg-primary: #031521;
+    --bg-secondary: #081b28;
+    --bg-tertiary: #0b2231;
+
+    --bg-sidebar: #0000008c;
+    --bg-sidebar-item: transparent;
+
+    --bg-hover: #1d49a759;
+    --bg-muted: #00000040;
+
+    --bg-code: #020d15;
+    --bg-light: #0b2231;
+    --bg-card: #081b28;
+
+
+    /* Text */
+
+    --text-primary: #ffffffd9;
+    --text-secondary: #c2d6df;
+    --text-muted: #838383;
+
+    --text-heading: #ffffff;
+    --text-dark: #ffffff;
+
+    --text-on-accent: #ffffff;
+    --text-accent: #00a1a9;
+
+
+    /* Borders */
+
+    --border-color: #89baed36;
+    --border-soft: #90e1ff20;
+    --border-light: #90e1ff33;
+    --border-hover: #3da6ff;
+
+
+    /* Accent */
+
+    --accent-color: #00a1a9;
+    --accent-hover: #059b82;
+
+    --accent-bg: #002a43de;
+    --accent-light: #002a43de;
+    --accent-soft-bg: #1d49a759;
+
+    --accent-shadow:
+        rgb(0 161 169 / 25%);
+
+
+    /* Primary */
+
+    --primary-color: #00a1a9;
+    --primary-hover: #059b82;
+
+    --primary-light: #002a43de;
+    --primary-bg: #002a43de;
+
+
+    /* Inputs */
+
+    --input-bg: #0000008c;
+    --input-border: #90e1ff33;
+    --input-focus-border: #3da6ff;
+
+
+    /* Tables */
+
+    --table-head-bg: #00000066;
+    --table-head-text: #ffffff;
+
+    --table-header-bg: #00000066;
+
+
+    /* Focus */
+
+    --focus-ring: #3da6ff;
+
+
+    /* Success */
+
+    --success-color: #1ed760;
+    --success-hover: #059b82;
+
+    --success-accent: #1ed760;
+
+    --success-soft-bg: #004b1a;
+    --success-soft-text: #ffffff;
+
+    --success-bg: #004b1a;
+    --success-text: #ffffff;
+    --success-border: #1ed760;
+
+
+    /* Danger */
+
+    --danger-color: #f02769;
+    --danger-hover: #d41f5d;
+
+    --danger-accent: #f02769;
+
+    --danger-soft-bg: #910000ba;
+    --danger-soft-text: #ffffff;
+
+    --danger-bg: #910000ba;
+    --danger-text: #ffffff;
+    --danger-border: #f02769;
+
+
+    /* Warning */
+
+    --warning-color: #f0b429;
+    --warning-bg: #42320d;
+    --warning-text: #ffe7a3;
+    --warning-border: #80641a;
+
+    --warn-soft-bg: #42320d;
+    --warn-soft-text: #ffe7a3;
+
+
+    /* Info */
+
+    --info-color: #1aabe1;
+
+    --info-bg: #002a43de;
+    --info-text: #ffffff;
+
+    --info-border: #00a0c5;
+
+    --info-soft-bg: #002a43de;
+    --info-soft-text: #ffffff;
+
+
+    /* Misc */
+
+    --icon-color: #ffffffd9;
+    --command-bg: #020d15;
+
+    --bar-ok: #1ed760;
+    --bar-warn: #f0b429;
+    --bar-crit: #f02769;
+
+    color-scheme: dark;
 }
 
-/*------------------------------------------------------------------------------
-| Body */
 
-body {
-    background: url('https://storage.googleapis.com/interpryce/public/cyberpanel/bg2-cyberpanel-itp.png') center center no-repeat fixed;
-    background-size: cover;
-    background-color: var(--color-blue-dark) !important;
-    color: var(--color-white);
-    transition: background .2s;
-}
+/* ==========================================================
+   GLOBAL BACKGROUND
+   ========================================================== */
 
-/*------------------------------------------------------------------------------
-| Header & Logo */
+html.cp-evergreen body {
+    background:
+        linear-gradient(
+            rgba(3, 21, 33, 0.48),
+            rgba(3, 21, 33, 0.48)
+        ),
+        url("https://storage.googleapis.com/interpryce/public/cyberpanel/bg2-cyberpanel-itp.png")
+        center center / cover no-repeat fixed !important;
 
-#header-logo .logo-content-big, .logo-content-small {
-    background: url('https://storage.googleapis.com/interpryce/public/cyberpanel/logo-admin-dark.png') left 50% no-repeat;
-    text-indent: -999em;
-    position: absolute;
-    height: 47px;
-    width: 190px;
-    left: 10px;
-    top: 40%;
-    margin-top: -17px;
-}
-
-#page-header {
-    background-color: var(--color-black-55) !important;
-}
-
-#page-header .badge {
-    color: var(--color-white);
-    background-color: var(--color-secondary) !important;
-    font-size: 0.95em;
-    padding: 0.6em;
-    border-radius: 10rem;
-    background-color: var(--color-black-40) !important;
-}
-
-#header-nav-right .header-btn,
-#header-nav-right .dropdown > a {
-    border: 1px solid var(--color-border) !important;
-    border-radius: 4px;
-    width: 45px;
-    height: 45px;
-    line-height: 43px;
-    display: block;
-    text-align: center;
-    position: relative;
-}
-
-.title-hero {
-    font-size: 16px !important;
     color: var(--color-white-85) !important;
-    margin: 7px 0 10px 3px;
 }
 
-#page-title {
-    padding: 20px;
-    margin: 15px 0 33px 0;
-    box-shadow: 0 0.1rem 0.7rem var(--color-black-40);
-    border-radius: 5px;
-    color: var(--color-white);
-    text-align: center;
-    background-color: var(--color-black-55);
+
+/* Current CyberPanel content layer */
+
+html.cp-evergreen #main-content {
+    background: transparent !important;
+    color: var(--color-white-85) !important;
 }
 
-#page-title p, h1, #page-title h2 {
-    color: var(--color-white) !important;
-}
 
-#page-title h2 {
-    font-size: 2rem;
-    font-weight: 700 !important;
-    line-height: 1.8em;
-}
+/* ==========================================================
+   HEADER
+   ========================================================== */
 
-/*------------------------------------------------------------------------------
-| Sidebar */
-
-#sidebar-menu, #header-logo {
+html.cp-evergreen #header {
     background: var(--color-black-55) !important;
-    border-right: 1px solid var(--color-white-20);
-    box-shadow: none;
-    padding: 5px 12px;
-    transition: all .2s ease-out;
+
+    border-bottom:
+        1px solid var(--color-border) !important;
+
+    box-shadow:
+        0 2px 12px var(--color-black-40) !important;
+
+    backdrop-filter: blur(10px);
 }
 
-#sidebar-menu-item-server-ip-address span {
+
+/* Header context */
+
+html.cp-evergreen #header .cp-header-eyebrow {
     color: var(--color-primary) !important;
 }
 
-#sidebar-menu li .sidebar-submenu ul li {
-    border: unset;
-}
-
-#sidebar-menu li .sidebar-submenu ul li a:hover {
-    color: var(--color-white);
-    text-decoration: none;
-    background: var(--color-bg-blue-35);
-}
-
-#sidebar-menu li .sidebar-submenu {
-    margin-top: 0;
-    border: 1px solid var(--color-border);
-}
-
-#sidebar-menu li .sidebar-submenu ul li a.sfActive {
-    background: var(--color-white-20);
-    color: var(--color-white);
-}
-
-#sidebar-menu > li > a {
-    padding: 0 10px;
-    border-radius: 3px;
-    font-size: 13px;
-    border: transparent solid 1px;
-    height: 36px;
-    margin-block: 5px;
-}
-
-#sidebar-menu > li > a .bs-badge, #sidebar-menu > li > a .bs-label {
-    position: absolute;
-    right: 22px;
-    top: 8px;
-    color: var(--color-white);
-    background-image: linear-gradient(to right, rgb(11, 183, 235), rgb(26, 123, 207));
-}
-
-.sidebar-submenu ul {
-    border: 1px solid var(--color-border);
-    background: var(--color-black-25);
-}
-
-#page-sidebar .header {
+html.cp-evergreen #header .cp-header-title {
     color: var(--color-white) !important;
 }
 
-#page-sidebar ul li a .glyph-icon {
-    color: var(--color-white);
-}
 
-#page-sidebar.collapse.in {
-    background-color: var(--color-black-55);
-}
+/* Header controls */
 
-#page-sidebar ul li.sfHover > a.sf-with-ul {
-    border-color: var(--color-border);
-    margin-bottom: 5px;
-    background: var(--color-bg-blue);
-    text-decoration: none;
-    color: var(--color-white);
-}
+html.cp-evergreen #header-right
+:is(
+    .theme-toggle,
+    .cp-notif-btn,
+    .logout-btn
+) {
+    background: var(--color-black-40) !important;
 
-#page-sidebar ul li a:hover {
-    color: var(--color-white);
-    text-decoration: none;
-    background: var(--color-black-40);
-    border-color: var(--color-border);
-}
-
-li#sidebar-menu-item-databases,
-li#sidebar-menu-item-dns {
-    cursor: pointer;
-}
-
-/*------------------------------------------------------------------------------
-| Panels & Content Boxes */
-
-.panel {
-    box-shadow: 0 0.1rem 0.7rem var(--color-black-40);
-    border: unset;
-    margin-bottom: 20px;
-    background-color: var(--color-black-40) !important;
-    padding: 0;
-}
-
-.panel p {
-    color: var(--color-white);
-    padding: 0 15px;
-}
-
-.panel-body {
-    padding: 0.25rem;
-    position: relative;
-}
-
-.panel-body .form-group {
-    border-top: solid 0px var(--color-white-20);
-}
-
-.panel-body h3[class='title-hero'] {
-    background-color: var(--color-black-40);
-    padding: 8px;
-    margin: 0;
-}
-
-.panel-body [class="table table-striped table-bordered"] {
-    padding: 1px !important;
-    margin: 0;
-}
-
-.panel-body .col-md-6 .example-box-wrapper:last-child,
-.panel-body .example-box-wrapper:last-child {
-    margin-bottom: 0;
-    padding: 0 5px 15px 5px;
-}
-
-.panel h3.content-box-header {
-    margin: 0 0 20px 0;
-}
-
-.panel.col-md-11 {
-    width: 100%;
-}
-
-.mx-10.col-lg-9.panel.col-md-push-50,
-.mx-10.col-md-2.panel.panel-body.col-md-pull-50 {
-    box-shadow: 0 0.1rem 0.7rem var(--color-black-25);
-    border: 1px solid var(--color-black-25);
-    margin-bottom: 30px;
-    background-color: var(--color-black-25);
-}
-
-.content-box {
-    box-shadow: 0 0.1rem 0.7rem var(--color-black-40);
-    border: 1px solid var(--color-border-2);
-    background: var(--color-black-40);
-    margin-bottom: 20px;
-}
-
-.content-box-wrapper {
-    margin: 7px;
-}
-
-.example-box-wrapper .dbDetails button:hover {
-    color: var(--color-white);
-    border-color: var(--color-white-50);
-}
-
-.example-box-wrapper .dbDetails button {
-    color: var(--color-white);
-    border-color: var(--color-border-2);
-}
-
-.example-box-wrapper .dbDetails span {
-    color: var(--color-white);
-    font-weight: 500;
-}
-
-.content-box-header {
-    font-size: 14px;
-    text-transform: uppercase;
-    padding: 8px;
-    background-color: var(--color-black-40);
-    color: var(--color-white);
-}
-
-.content-box-header > .ui-tabs-nav li > a {
-    line-height: 29px !important;
-    height: 29px !important;
-}
-
-h3.content-box-header {
-    margin: 0;
-}
-
-.content-box-header h2 {
     color: var(--color-white) !important;
-    font-size: 1.4em;
+
+    border:
+        1px solid var(--color-border) !important;
+
+    border-radius: 5px !important;
 }
 
-.col-md-2 .content-box-header {
-    text-align: center;
-    margin: 0 0 1.8rem 0;
-}
 
-.bg-gradient-9,
-#page-content {
-    background: unset !important;
-}
+html.cp-evergreen #header-right
+:is(
+    .theme-toggle,
+    .cp-notif-btn,
+    .logout-btn
+):hover {
+    background: var(--color-bg-blue) !important;
 
-.col-md-2.content-box-header {
-    background-color: var(--color-primary);
-    margin-top: 4px;
-}
+    border-color:
+        var(--color-blue-3) !important;
 
-.col-md-2.content-box-header a {
-    display: block;
-    color: var(--color-white);
-    padding: 9px 12px;
-    border: 1px solid var(--color-white-85);
-    border-radius: 3px;
-    margin: -10px;
-}
-
-.col-md-2.content-box-header a:hover {
-    border: 1px solid var(--color-blue);
-    color: var(--color-white-85);
-}
-
-.col-lg-10.content-box-header {
-    background-color: var(--color-black-25);
-    padding: 12px;
-}
-
-.col-lg-10.content-box-header a {
-    color: var(--color-blue-2);
-    margin-left: -7px;
-    margin-right: 12px;
-    padding: 9px 12px;
-    border: 1px solid var(--color-grey);
-    border-radius: 3px;
-}
-
-.col-lg-10.content-box-header a:hover {
-    background-color: var(--color-blue-dark);
-    border: 1px solid var(--color-grey-2);
-}
-
-/*------------------------------------------------------------------------------
-| Buttons & Links */
-
-a,
-a:hover,
-a:focus {
-    text-decoration: none;
-    color: var(--color-white);
-}
-
-a.tile-box.tile-box-shortcut.btn-primary {
-    transition: transform .2s;
-}
-
-a.tile-box.tile-box-shortcut.btn-primary:hover {
-    transform: scale(1.05);
-    background-color: var(--color-black-40);
-    border: 1px solid var(--color-white-85) !important;
-}
-
-.btn-primary {
-    box-shadow: 0 0.1rem 0.7rem var(--color-black-25);
-    border: 1px solid var(--color-border);
-    background-color: var(--color-bg-blue);
-}
-
-.btn-primary:hover {
-    color: var(--color-white);
-    background-color: var(--color-bg-blue);
-    transform: scale(1.03);
-    box-shadow: inset 1px 1px 3px var(--color-white-50);
-}
-
-#logout-btn {
-    background: var(--color-red-2);
-}
-
-button.btn.btn-login {
-    background-color: var(--color-primary) !important;
-}
-
-button.btn.btn-login:hover {
-    background-color: var(--color-secondary) !important;
-}
-
-button[ng-click="clearLogs()"] {
-    margin-left: 25px;
-}
-
-button[ng-click="removeCSF()"] {
-    background-color: var(--color-red-2) !important;
-}
-
-button[ng-click="uninstallExt(record.extensionName)"] {
-    background: var(--color-red-2) !important;
-}
-
-button[ng-click="deleteACLFunc()"] {
-    background: var(--color-red-2) !important;
-}
-
-button[ng-click="deleteWebsite()"] {
-    background: var(--color-red-2) !important;
-}
-
-button[ng-click="deletePackage()"] {
-    background: var(--color-red-2) !important;
-}
-
-button[ng-click="deleteDatabase()"] {
-    background: var(--color-red-2) !important;
-}
-
-button[ng-click="deleteZone()"] {
-    background: var(--color-red-2) !important;
-}
-
-button[ng-click="deleteEmailAccount()"] {
-    background: var(--color-red-2) !important;
-}
-
-button[ng-click="deleteFTPAccount()"] {
-    background: var(--color-red-2) !important;
-}
-
-button[ng-click="deleteChildDomain(record.childDomain)"] {
-    background-color: var(--color-red-2) !important;
-}
-
-button[ng-click="changeCPPort()"] {
-    background: var(--color-red-2) !important;
-}
-
-button[ng-click="usePassword()"] {
-    background: var(--color-secondary) !important;
-}
-
-/*------------------------------------------------------------------------------
-| Forms & Tables */
-
-.form-control {
-    background: var(--color-black-55);
-    color: var(--color-secondary);
-}
-
-.form-control:focus {
-    color: var(--color-white-85);
-    border-color: var(--color-blue-3);
-    background-color: var(--color-blue-dark);
-}
-
-.form-group select.form-control option {
-    background-color: var(--color-black-90);
-    border: 1px solid var(--color-border-2);
-    color: var(--color-white);
-    font-size: 1.2em;
-    font-weight: 500;
-}
-
-.form-group button.btn.btn-primary.btn-lg {
-    background-color: var(--color-primary);
-    border: 1px solid var(--color-white-85);
-}
-
-.form-group button.btn.btn-primary.btn-lg:hover {
-    background-color: var(--color-secondary) !important;
-}
-
-.form-group .col-sm-6 .ng-valid {
-    background-color: var(--color-black-25);
-    border: 1px solid var(--color-border-2);
-    color: var(--color-white) !important;
-    line-height: 2em;
-    font-size: 1.1em;
-}
-
-.form-group .col-sm-6 input {
-    background-color: var(--color-black-25);
-    border: 1px solid var(--color-border-2);
     color: var(--color-white) !important;
 }
 
-.form-group {
-    color: var(--color-grey-2);
-}
 
-.form-group .control-label,
-.form-group .text-right {
-    color: var(--color-secondary) !important;
-    font-size: 14px !important;
-}
+/* Social icons */
 
-.form-group .table {
-    color: var(--color-white);
-    background-color: var(--color-black-40);
-    border-color: var(--color-border);
-}
-
-.form-group .border-red {
-    color: var(--color-white) !important;
-    background-color: var(--color-red);
-    border-color: var(--color-red) !important;
-}
-
-.form-group .border-purple {
-    color: #1a1a1a !important;
-    background-color: var(--color-green);
-    border: 1px solid var(--color-white-85) !important;
-    margin-block: 5px;
-}
-
-.form-group .alert-success p {
-    color: var(--color-white) !important;
-}
-
-.form-group .col-sm-8 .table,
-.form-group .col-sm-4 .table {
-    color: var(--color-white);
-    background-color: var(--color-white-20);
-    border-color: var(--color-border);
-    margin: 20px 0 !important;
-}
-
-.form-row, .row {
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-.table {
-    padding: 10px;
-    background: var(--color-black-25);
-    border: solid 1px;
-}
-
-.table td {
-    border-color: var(--color-border) !important;
-    color: var(--color-white-85);
-}
-
-.col-sm-12 .table th,
-.col-sm-4 .table th,
-.col-sm-8 .table th {
-    color: var(--color-white);
-}
-
-.table-responsive .col-lg-9 {
-    padding: 2px 0 0 15px;
-    width: 71vw !important;
-    height: auto;
-    border-bottom: unset !important;
-}
-
-.table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: var(--color-white-20);
-}
-
-.table > tbody > tr > th,
-.table > tfoot > tr > th,
-.table > thead > tr > th {
-    color: var(--color-white);
-    font-weight: 400;
-    border-color: var(--color-white-85);
-    background-color: transparent;
-}
-
-.table-striped tr:nth-child(even) > td {
-    background: var(--color-black-40);
-}
-
-.col-sm-12 table[class='table'] {
-    margin: 10px 10px 15px 0;
-}
-
-.select2-container--default .select2-selection--single {
-    background-color: var(--color-blue-dark);
-}
-
-.select2-container--default .select2-selection--single,
-.select2-container--default .select2-search--dropdown .select2-search__field,
-.select2-container--default .select2-results__option--selected,
-.select2-dropdown {
-    background-color: var(--color-blue-dark);
-}
-
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: var(--color-white);
-}
-
-/*------------------------------------------------------------------------------
-| Miscellaneous Classes */
-
-hr {
-    margin: 20px 0;
-    border: 0;
-    border-top: 1px solid var(--color-white-50);
-}
-
-.divider, .nav-divider, .timeline-horizontal.timeline-box:before {
-    background: var(--color-white-20);
-}
-
-.progress, .progressbar {
-    position: relative;
-    text-align: center;
-    background: var(--color-black-25);
-    box-shadow: inset 1px 1px 3px var(--color-white-50);
-}
-
-.bordered-row > .form-group {
-    padding: 17px 0;
-    margin: 5px;
-    border-color: var(--color-border);
-}
-
-.border-black {
-    border-color: var(--color-border) !important;
-}
-
-.font-black {
+html.cp-evergreen #header .social-links a {
     color: var(--color-white-85) !important;
 }
 
-.text-success {
-    color: var(--color-primary) !important;
+html.cp-evergreen #header .social-links a:hover {
+    color: var(--color-blue) !important;
 }
 
-.alert-success, .alert-success a, .parsley-success {
-    color: var(--color-white);
-    border: 1px solid var(--color-blue-2);
-    background: var(--color-secondary);
-    margin: 10px;
+
+/* Logout */
+
+html.cp-evergreen #header .logout-btn {
+    background:
+        var(--color-red-2) !important;
 }
 
-select#stheme {
-    margin: 15px;
+
+/* ==========================================================
+   SIDEBAR
+   ========================================================== */
+
+html.cp-evergreen #sidebar {
+    background:
+        var(--color-black-55) !important;
+
+    border-right:
+        1px solid var(--color-white-20) !important;
+
+    box-shadow:
+        4px 0 16px rgb(0 0 0 / 20%) !important;
+
+    backdrop-filter: blur(10px);
 }
 
-.current-pack {
-    color: var(--color-white-50) !important;
-    width: auto;
-    font-size: 14px;
+
+/* CyberSpace themed logo */
+
+html.cp-evergreen #sidebar .sidebar-logo {
+    background:
+        url("https://storage.googleapis.com/interpryce/public/cyberpanel/logo-admin-dark.png")
+        left center / 190px auto
+        no-repeat !important;
 }
 
-label {
-    color: var(--color-blue-2);
+html.cp-evergreen #sidebar
+.sidebar-logo .cp-brand-wordmark {
+    opacity: 0 !important;
 }
 
-.checkbox label {
-    color: var(--color-white);
+
+/* Sidebar search */
+
+html.cp-evergreen #sidebar .sidebar-search {
+    background:
+        var(--color-black-40) !important;
+
+    border:
+        1px solid var(--color-border) !important;
 }
 
-.sf-js-enabled {
-    background: var(--color-black-40) !important;
-    transition: all .2s ease-out !important;
-}
-
-.c100 {
-    background-color: var(--color-black-25);
-    border: 1px solid var(--color-border);
-
-}
-
-.c100:after {
-    background-color: var(--color-black-40);
-    top: .07em;
-    left: .07em;
-}
-
-.col-sm-12 .alert p {
+html.cp-evergreen #sidebar
+#sidebar-search-input {
     color: var(--color-white) !important;
 }
 
-.alert p {
-    color: inherit !important;
+html.cp-evergreen #sidebar
+#sidebar-search-input::placeholder {
+    color: var(--color-white-50) !important;
 }
 
-.alert.alert-danger {
-    background: var(--color-red) !important;
+
+/* Section labels */
+
+html.cp-evergreen #sidebar .section-header {
+    color:
+        var(--color-blue-2) !important;
 }
 
-.badge, .bs-badge {
-    font-size: 13px;
-    min-width: 40px;
-    border-radius: 3px;
+
+/* Menu items */
+
+html.cp-evergreen #sidebar .menu-item {
+    color:
+        var(--color-white-85) !important;
+
+    border:
+        1px solid transparent !important;
+
+    border-radius: 4px !important;
+
+    transition:
+        background .15s ease,
+        border-color .15s ease,
+        transform .15s ease;
 }
 
-.tile-box-shortcut .tile-content-wrapper {
-    padding: 0;
-    min-height: 73px !important;
+
+html.cp-evergreen #sidebar .menu-item:hover {
+    background:
+        var(--color-black-40) !important;
+
+    border-color:
+        var(--color-border) !important;
+
+    color:
+        var(--color-white) !important;
+
+    transform:
+        translateX(2px);
 }
 
-.tile-box-shortcut .tile-header {
-    padding: 1.66em 1.85em !important;
-    left: 1.7em !important;
-    font-size: 15px;
+
+/* Selected menu item */
+
+html.cp-evergreen #sidebar .menu-item.active {
+    background:
+        var(--color-bg-blue-35) !important;
+
+    border-color:
+        var(--color-primary) !important;
+
+    color:
+        var(--color-white) !important;
 }
 
-.text-danger {
-    background: var(--color-red-2);
-    padding: 2px;
-    text-align: center;
-    cursor: pointer;
-    max-width: 40px;
+
+html.cp-evergreen #sidebar
+.menu-item .icon-wrapper {
+    color:
+        var(--color-white-85) !important;
 }
 
-/*------------------------------------------------------------------------------
-| Loader */
 
-#loading {
-    background: var(--color-black-90) !important;
+html.cp-evergreen #sidebar
+.menu-item.active .icon-wrapper {
+    color:
+        var(--color-primary) !important;
 }
 
-/*------------------------------------------------------------------------------
-| Modal */
 
-.modal-content {
-    border: 1px solid var(--color-white-20);
-    background-color: var(--color-blue-dark);
+/* Server information */
+
+html.cp-evergreen #sidebar .server-info {
+    background:
+        var(--color-black-40) !important;
+
+    border:
+        1px solid var(--color-border) !important;
+
+    color:
+        var(--color-white-85) !important;
 }
 
-.modal-footer button.btn.btn-primary {
-    background-color: var(--color-secondary) !important;
+html.cp-evergreen #sidebar .server-info
+:is(.server-icon, .ip-value) {
+    color:
+        var(--color-primary) !important;
 }
 
-/*------------------------------------------------------------------------------
-| Scrollbar */
 
-::-webkit-scrollbar {
+/* ==========================================================
+   BREADCRUMB
+   ========================================================== */
+
+html.cp-evergreen #main-content .cp-breadcrumb {
+    background:
+        var(--color-black-40) !important;
+
+    border:
+        1px solid var(--color-border) !important;
+
+    color:
+        var(--color-white-85) !important;
+}
+
+html.cp-evergreen #main-content
+.cp-breadcrumb a {
+    color:
+        var(--color-blue) !important;
+}
+
+
+/* ==========================================================
+   PAGE HEADERS
+   ========================================================== */
+
+html.cp-evergreen #main-content .page-header {
+    background:
+        var(--color-black-55) !important;
+
+    border:
+        1px solid var(--color-border) !important;
+
+    border-radius:
+        6px !important;
+
+    box-shadow:
+        0 2px 10px var(--color-black-40) !important;
+
+    padding:
+        20px !important;
+}
+
+
+html.cp-evergreen #main-content
+:is(
+    .page-title,
+    .page-header h1,
+    .title-hero,
+    .section-title,
+    .dashboard-greeting h1,
+    .dashboard-greeting h2
+) {
+    color:
+        var(--color-white) !important;
+}
+
+
+html.cp-evergreen #main-content
+:is(
+    .page-subtitle,
+    .page-header p
+) {
+    color:
+        var(--color-white-85) !important;
+}
+
+
+/* ==========================================================
+   CARDS / PANELS / CONTENT BOXES
+   ========================================================== */
+
+html.cp-evergreen #main-content
+:is(
+    .content-card,
+    .main-card,
+    .card,
+    .cyber-card,
+    .content-section,
+    .section-card,
+    .data-card,
+    .content-box,
+    .content-box-wrapper,
+    .example-box-wrapper,
+    .info-card,
+    .form-card,
+    .config-card,
+    .status-panel,
+    .settings-panel,
+    .backup-panel,
+    .panel,
+    .stat-card,
+    .insight-card,
+    .activity-section,
+    .overview-section,
+    .insights-section,
+    .cp-qa-card,
+    .cp-onboarding
+) {
+    background:
+        var(--color-black-40) !important;
+
+    border:
+        1px solid var(--color-border) !important;
+
+    color:
+        var(--color-white-85) !important;
+
+    box-shadow:
+        0 2px 10px var(--color-black-40) !important;
+
+    backdrop-filter:
+        blur(6px);
+}
+
+
+/* Headers inside cards */
+
+html.cp-evergreen #main-content
+:is(
+    .card-header,
+    .panel-header,
+    .content-box-header,
+    .card-title,
+    .section-title
+) {
+    color:
+        var(--color-white) !important;
+}
+
+
+/* General card text */
+
+html.cp-evergreen #main-content
+:is(
+    .content-card,
+    .card,
+    .panel,
+    .stat-card,
+    .insight-card
+) p {
+    color:
+        var(--color-white-85);
+}
+
+
+/* Dashboard quick-action cards */
+
+html.cp-evergreen #main-content
+.cp-qa-card:hover {
+    background:
+        var(--color-bg-blue) !important;
+
+    border-color:
+        var(--color-primary) !important;
+
+    transform:
+        translateY(-2px);
+}
+
+
+html.cp-evergreen #main-content
+.cp-qa-ic {
+    background:
+        var(--color-bg-blue-35) !important;
+
+    color:
+        var(--color-primary) !important;
+}
+
+
+/* Insight icons */
+
+html.cp-evergreen #main-content
+.insight-icon {
+    background:
+        var(--color-bg-blue-35) !important;
+
+    color:
+        var(--color-primary) !important;
+}
+
+
+/* ==========================================================
+   FORMS
+   ========================================================== */
+
+html.cp-evergreen #main-content
+:is(
+    .form-control,
+    .form-select,
+    input,
+    textarea,
+    select
+) {
+    background:
+        var(--color-black-55) !important;
+
+    color:
+        var(--color-white) !important;
+
+    border:
+        1px solid var(--color-border-2) !important;
+}
+
+
+html.cp-evergreen #main-content
+:is(
+    .form-control,
+    .form-select,
+    input,
+    textarea,
+    select
+):focus {
+    background:
+        var(--color-blue-dark) !important;
+
+    color:
+        var(--color-white) !important;
+
+    border-color:
+        var(--color-blue-3) !important;
+
+    box-shadow:
+        0 0 0 3px
+        rgb(61 166 255 / 18%) !important;
+}
+
+
+html.cp-evergreen #main-content
+:is(
+    label,
+    .form-label,
+    .control-label
+) {
+    color:
+        var(--color-blue-2) !important;
+}
+
+
+html.cp-evergreen #main-content option {
+    background:
+        var(--color-blue-dark) !important;
+
+    color:
+        var(--color-white) !important;
+}
+
+
+/* ==========================================================
+   TABLES
+   ========================================================== */
+
+html.cp-evergreen #main-content
+:is(
+    .table,
+    .modern-table,
+    .data-table,
+    .cyber-table,
+    .activity-table,
+    .custom-table,
+    .ftp-table,
+    .logs-table,
+    .process-table
+) {
+    background:
+        var(--color-black-25) !important;
+
+    color:
+        var(--color-white-85) !important;
+
+    border-color:
+        var(--color-border) !important;
+}
+
+
+html.cp-evergreen #main-content
+:is(
+    .table,
+    .modern-table,
+    .data-table,
+    .cyber-table,
+    .activity-table,
+    .custom-table
+) th {
+    background:
+        var(--color-black-55) !important;
+
+    color:
+        var(--color-white) !important;
+
+    border-color:
+        var(--color-border) !important;
+}
+
+
+html.cp-evergreen #main-content
+:is(
+    .table,
+    .modern-table,
+    .data-table,
+    .cyber-table,
+    .activity-table,
+    .custom-table
+) td {
+    color:
+        var(--color-white-85) !important;
+
+    border-color:
+        var(--color-border) !important;
+}
+
+
+html.cp-evergreen #main-content
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background:
+        var(--color-white-20) !important;
+}
+
+
+html.cp-evergreen #main-content
+:is(
+    .table,
+    .modern-table,
+    .data-table,
+    .cyber-table,
+    .activity-table
+) tbody tr:hover {
+    background:
+        var(--color-bg-blue-35) !important;
+}
+
+
+/* ==========================================================
+   BUTTONS
+   ========================================================== */
+
+html.cp-evergreen #main-content
+:is(
+    .btn-primary,
+    .save-btn,
+    .btn-install,
+    .btn-action,
+    .btn-create,
+    .cp-build-btn.primary
+) {
+    background:
+        var(--color-bg-blue) !important;
+
+    color:
+        var(--color-white) !important;
+
+    border:
+        1px solid var(--color-primary) !important;
+
+    box-shadow:
+        0 2px 7px var(--color-black-25) !important;
+
+    transition:
+        transform .15s ease,
+        background .15s ease,
+        box-shadow .15s ease;
+}
+
+
+html.cp-evergreen #main-content
+:is(
+    .btn-primary,
+    .save-btn,
+    .btn-install,
+    .btn-action,
+    .btn-create,
+    .cp-build-btn.primary
+):hover {
+    background:
+        var(--color-primary) !important;
+
+    color:
+        var(--color-white) !important;
+
+    transform:
+        scale(1.025);
+
+    box-shadow:
+        inset 1px 1px 3px
+        var(--color-white-50) !important;
+}
+
+
+/* Destructive actions */
+
+html.cp-evergreen #main-content
+:is(
+    .btn-danger,
+    .btn-delete,
+    .delete-btn
+) {
+    background:
+        var(--color-red-2) !important;
+
+    border-color:
+        var(--color-red) !important;
+
+    color:
+        var(--color-white) !important;
+}
+
+
+/* Secondary buttons */
+
+html.cp-evergreen #main-content
+:is(
+    .btn-secondary,
+    .btn-default,
+    .btn-outline
+) {
+    background:
+        var(--color-black-40) !important;
+
+    border:
+        1px solid var(--color-border) !important;
+
+    color:
+        var(--color-white-85) !important;
+}
+
+
+/* ==========================================================
+   LINKS
+   ========================================================== */
+
+html.cp-evergreen #main-content a {
+    color:
+        var(--color-blue) !important;
+}
+
+html.cp-evergreen #main-content a:hover {
+    color:
+        var(--color-primary) !important;
+}
+
+
+/* Keep button text white */
+
+html.cp-evergreen #main-content
+a:is(
+    .btn,
+    .btn-primary,
+    .btn-danger,
+    .btn-success,
+    .btn-warning
+) {
+    color:
+        var(--color-white) !important;
+}
+
+
+/* ==========================================================
+   ALERTS
+   ========================================================== */
+
+html.cp-evergreen #main-content
+.alert-success {
+    background:
+        var(--color-green-2) !important;
+
+    color:
+        var(--color-white) !important;
+
+    border-color:
+        var(--color-green) !important;
+}
+
+
+html.cp-evergreen #main-content
+.alert-danger,
+html.cp-evergreen #main-content
+.alert-error {
+    background:
+        var(--color-red-2) !important;
+
+    color:
+        var(--color-white) !important;
+
+    border-color:
+        var(--color-red) !important;
+}
+
+
+html.cp-evergreen #main-content
+.alert-info {
+    background:
+        var(--color-bg-blue) !important;
+
+    color:
+        var(--color-white) !important;
+
+    border-color:
+        var(--color-blue) !important;
+}
+
+
+/* ==========================================================
+   BADGES
+   ========================================================== */
+
+html.cp-evergreen .badge {
+    border-radius:
+        4px !important;
+}
+
+html.cp-evergreen
+:is(
+    .badge-primary,
+    .badge-promo
+) {
+    background:
+        var(--color-bg-blue) !important;
+
+    color:
+        var(--color-white) !important;
+}
+
+
+/* ==========================================================
+   PROGRESS BARS
+   ========================================================== */
+
+html.cp-evergreen #main-content
+.progress-bar-container,
+html.cp-evergreen #main-content
+.progress {
+    background:
+        var(--color-black-25) !important;
+
+    border:
+        1px solid var(--color-border) !important;
+}
+
+
+html.cp-evergreen #main-content
+.progress-bar {
+    background:
+        var(--color-primary) !important;
+}
+
+
+/* ==========================================================
+   ACTIVITY TABS
+   ========================================================== */
+
+html.cp-evergreen #main-content
+.activity-tabs {
+    background:
+        var(--color-black-25) !important;
+
+    border:
+        1px solid var(--color-border) !important;
+}
+
+
+html.cp-evergreen #main-content
+.activity-tab {
+    color:
+        var(--color-white-85) !important;
+}
+
+
+html.cp-evergreen #main-content
+.activity-tab:hover {
+    background:
+        var(--color-black-40) !important;
+}
+
+
+html.cp-evergreen #main-content
+.activity-tab.active {
+    background:
+        var(--color-bg-blue) !important;
+
+    color:
+        var(--color-white) !important;
+
+    border-color:
+        var(--color-primary) !important;
+}
+
+
+/* ==========================================================
+   MODALS / POPUPS
+   ========================================================== */
+
+html.cp-evergreen
+.modal-content,
+html.cp-evergreen
+.cp-notif-panel,
+html.cp-evergreen
+.cp-appearance-panel,
+html.cp-evergreen
+.cp-cmdk {
+    background:
+        var(--color-blue-dark) !important;
+
+    color:
+        var(--color-white-85) !important;
+
+    border:
+        1px solid var(--color-border-2) !important;
+
+    box-shadow:
+        0 18px 48px
+        rgb(0 0 0 / 65%) !important;
+}
+
+
+html.cp-evergreen
+:is(
+    .modal-header,
+    .modal-footer
+) {
+    border-color:
+        var(--color-border) !important;
+}
+
+
+/* ==========================================================
+   NOTIFICATIONS
+   ========================================================== */
+
+html.cp-evergreen
+.cp-notif-item {
+    border-color:
+        var(--color-border) !important;
+}
+
+html.cp-evergreen
+.cp-notif-item:hover {
+    background:
+        var(--color-bg-blue-35) !important;
+}
+
+
+/* ==========================================================
+   CYBEREDGE PROMO
+   ========================================================== */
+
+html.cp-evergreen
+#cyberedge-panel-promo {
+    background:
+        var(--color-black-40) !important;
+
+    border-color:
+        var(--color-border) !important;
+
+    border-left-color:
+        var(--color-primary) !important;
+
+    color:
+        var(--color-white-85) !important;
+}
+
+
+/* ==========================================================
+   LOGIN PAGE
+   ========================================================== */
+
+html.cp-evergreen.cp-auth body {
+    background:
+        linear-gradient(
+            0deg,
+            rgba(0,95,95,.41) 0%,
+            rgba(1,1,24,.80) 100%
+        ),
+        url("https://storage.googleapis.com/interpryce/public/cyberpanel/bg2-cyberpanel-itp.png")
+        center center / cover fixed
+        no-repeat !important;
+}
+
+
+html.cp-evergreen.cp-auth
+.col-login-left {
+    background:
+        rgba(0,0,0,.40) !important;
+}
+
+
+html.cp-evergreen.cp-auth
+.col-login-right {
+    background:
+        rgba(3,21,33,.88) !important;
+}
+
+
+html.cp-evergreen.cp-auth
+:is(
+    input,
+    .form-control
+) {
+    background:
+        var(--color-black-55) !important;
+
+    color:
+        var(--color-white) !important;
+
+    border-color:
+        var(--color-border-2) !important;
+}
+
+
+html.cp-evergreen.cp-auth
+.btn-login {
+    background:
+        var(--color-primary) !important;
+
+    color:
+        var(--color-white) !important;
+}
+
+
+html.cp-evergreen.cp-auth
+.btn-login:hover {
+    background:
+        var(--color-secondary) !important;
+}
+
+
+/* ==========================================================
+   SCROLLBAR
+   ========================================================== */
+
+html.cp-evergreen ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
-    border-radius: 5px;
 }
 
-::-webkit-scrollbar-track-piece {
-    background-color: var(--color-blue-dark);
+
+html.cp-evergreen ::-webkit-scrollbar-track {
+    background:
+        var(--color-blue-dark);
 }
 
-::-webkit-scrollbar-thumb {
-    background-color: var(--color-blue);
-    border-radius: 5px;
+
+html.cp-evergreen ::-webkit-scrollbar-thumb {
+    background:
+        var(--color-blue);
+
+    border-radius:
+        5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--color-secondary);
+
+html.cp-evergreen ::-webkit-scrollbar-thumb:hover {
+    background:
+        var(--color-secondary);
 }
 
-/*------------------------------------------------------------------------------
-| Special Styles */
 
-.feturecard h4 {
-    color: var(--color-blue) !important;
-    margin-bottom: 15px;
+/* ==========================================================
+   MISCELLANEOUS
+   ========================================================== */
+
+html.cp-evergreen hr {
+    border-color:
+        var(--color-white-20) !important;
 }
 
-.col-lg-12 h2[style] {
-    color: var(--color-white) !important;
+
+html.cp-evergreen
+.text-success {
+    color:
+        var(--color-primary) !important;
 }
 
-div[style='margin-top: 4%'] {
-    margin-top: 8px !important;
+
+html.cp-evergreen
+.text-danger {
+    color:
+        #ff7aa7 !important;
 }
 
-.col-login-right {
-    background: var(--color-black-25);
+
+html.cp-evergreen
+:is(
+    code,
+    pre
+) {
+    background:
+        #020d15 !important;
+
+    color:
+        #bfeeff !important;
+
+    border-color:
+        var(--color-border) !important;
 }
 
-.col-login-left {
-    background: linear-gradient(0deg, rgba(0, 95, 95, 0.41) 0%, rgba(1, 1, 24, 0.80) 100%);
-}
 
-.login-changelogs .card {
-    background-color: var(--color-black-55);
+/* Loading surfaces */
+
+html.cp-evergreen #loading {
+    background:
+        var(--color-black-90) !important;
 }
